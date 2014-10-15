@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mode-sdk (0.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mode-sdk

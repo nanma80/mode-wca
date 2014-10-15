@@ -3,6 +3,8 @@ module ModeWca
     
     def start
       config
+      downloader = Wca::Downloader.new
+      p downloader.download
     end
 
     def config
