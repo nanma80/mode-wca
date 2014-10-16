@@ -14,7 +14,7 @@ module ModeWca
           row = line.chomp.split("\t")
           if first_row
             row.each do |cell|
-              column_names << cell
+              column_names << ModeWca::Helper.camel_to_snake(cell)
             end
             first_row = false
           else
@@ -35,6 +35,7 @@ module ModeWca
         puts "Converting TSV #{path} to CSV #{output.path}"
         first_row = true
 
+        line_counter = 0
         CSV.open(output.path, "wb") do |csv|
           File.open(path).each do |line|
             if first_row
@@ -42,10 +43,13 @@ module ModeWca
             else
               fields = line.chomp.split("\t")
               csv << fields
+              line_counter += 1
             end
           end
         end
 
+        puts "Number of lines in #{output.path}: #{line_counter}"
+        puts "Size of #{output.path}: #{output.size}"
         output.columns = columns
         output
       end

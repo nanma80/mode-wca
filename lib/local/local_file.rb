@@ -22,6 +22,10 @@ module ModeWca
         filename.split('.')[0]
       end
 
+      def size
+        File.size(path)
+      end
+
       class << self
         def clear!
           FileUtils.rm_rf(Dir.glob(DIRECTORY + '/*'))

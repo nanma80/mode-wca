@@ -8,6 +8,7 @@ require 'csv'
 
 # core
 
+require 'helper'
 require 'local/local_file'
 require 'local/tsv_file'
 require 'local/csv_file'
