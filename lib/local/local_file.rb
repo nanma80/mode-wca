@@ -7,6 +7,7 @@ module ModeWca
 
       def initialize(filename)
         @filename = filename
+        FileUtils.mkdir_p(File.dirname(path))
       end
 
       def path
@@ -19,6 +20,12 @@ module ModeWca
 
       def base
         filename.split('.')[0]
+      end
+
+      class << self
+        def clear!
+          FileUtils.rm_rf(Dir.glob(DIRECTORY + '/*'))
+        end
       end
     end
   end

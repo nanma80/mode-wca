@@ -24,6 +24,9 @@ module ModeWca
       end
 
       def execute_download(package)
+        puts 'Clear cache folder'
+        ModeWca::Local::LocalFile.clear!
+
         puts "Download starting"
         Net::HTTP.start(DOMAIN) do |http|
           resp = http.get(EXPORT_PATH + package.filename)

@@ -4,8 +4,14 @@ module ModeWca
     def start
       config
       downloader = Wca::Downloader.new
+      uploader = ModeClient::Uploader.new
+
       package = downloader.download
-      package.unpack
+      tsv_files = package.unpack
+
+      tsv_files.each do |tsv|
+        uploader.upload(tsv.to_csv)
+      end      
     end
 
     def config
