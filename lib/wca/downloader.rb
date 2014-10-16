@@ -5,13 +5,29 @@ module ModeWca
       EXPORT_PATH = '/results/misc/'
       EXPORT_PAGE = 'export.html'
       TSV_URL_PATTERN = /TSV: <a href='(WCA_export492_\d+.tsv.zip)'>/
-      CACHE_DIRECTORY = 'cache/'
 
       def download
+        package = ModeWca::Local::Package.new(tsv_url)
+        puts "Latest package name: #{package.filename}"
+
+        if should_skip?(package)
+          puts 'Skipping download'
+          return package
+        end
+
+        execute_download(package)
+        package
+      end
+
+      def should_skip?(package)
+        package.exists?
+      end
+
+      def execute_download(package)
         puts "Download starting"
-        Net::HTTP.start("www.worldcubeassociation.org") do |http|
-          resp = http.get(EXPORT_PATH + tsv_url)
-          open(CACHE_DIRECTORY + tsv_url, "wb") do |file|
+        Net::HTTP.start(DOMAIN) do |http|
+          resp = http.get(EXPORT_PATH + package.filename)
+          open(package.path, "wb") do |file|
               file.write(resp.body)
           end
         end

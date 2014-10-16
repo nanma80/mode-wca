@@ -2,9 +2,11 @@ GEM
   remote: https://rubygems.org/
   specs:
     mode-sdk (0.1.0)
+    rubyzip (0.9.9)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   mode-sdk
+  rubyzip
