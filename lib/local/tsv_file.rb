@@ -11,7 +11,7 @@ module ModeWca
         first_row = true
 
         File.open(path).each do |line|
-          row = line.chomp.split("\t")
+          row = line.chomp.split("\t", -1)
           if first_row
             row.each do |cell|
               column_names << ModeWca::Helper.camel_to_snake(cell)
@@ -41,7 +41,7 @@ module ModeWca
             if first_row
               first_row = false
             else
-              fields = line.chomp.split("\t")
+              fields = line.chomp.split("\t", -1)
               csv << fields
               line_counter += 1
             end

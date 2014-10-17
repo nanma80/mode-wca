@@ -23,10 +23,7 @@ module ModeWca
 
         table.upload_token = token
 
-        table.create unless table.exists?
-        puts "Replacing table for #{table_name}"
-
-        response = table.replace
+        response = create_or_replace(table)
         import_path = response.body['_links']['self'].fetch('href')
         import      = Mode::Sdk::TableImport.new(import_path)
 
@@ -35,6 +32,16 @@ module ModeWca
         end
 
         puts "Finished replacing table #{table_name}"
+      end
+
+      def create_or_replace(table)
+        if table.exists?
+          puts "=> Replacing #{table.full_name}..."
+          table.replace
+        else
+          puts "=> Creating #{table.full_name}..."
+          table.create
+        end
       end
 
       class << self

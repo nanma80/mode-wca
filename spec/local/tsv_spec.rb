@@ -9,7 +9,7 @@ describe 'TSV' do
   end
 
   it 'should convert to csv' do
-    tsv.to_csv(csv.path)
-    expect(File.read(csv.path)).to eq "1,111\n2,22\n3,\"t\"\"hre\"\"e\"\n4,\"fo, ur\"\n"
+    tsv.to_csv(csv.filename)
+    expect(File.read(csv.path)).to eq "1,111\n2,22\n3,\"t\"\"hre\"\"e1\"\n4,\"fo, ur 4\"\n5,\"\"\n"
   end
 end
