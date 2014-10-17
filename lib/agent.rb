@@ -2,6 +2,7 @@ module ModeWca
   class Agent
     
     def start
+      puts "[#{Time.now.utc}] Agent starting"
       config
       downloader = Wca::Downloader.new
       uploader = ModeClient::Uploader.new
@@ -10,8 +11,9 @@ module ModeWca
       tsv_files = package.unpack
 
       tsv_files.each do |tsv|
-        uploader.upload(tsv.to_csv)
-      end      
+        uploader.start(tsv.to_csv)
+      end
+      puts "[#{Time.now.utc}] Agent exists"
     end
 
     def config

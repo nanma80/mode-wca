@@ -4,7 +4,6 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'modewca'
 
-puts "[#{Time.now.utc}] Moving data from WCA to Mode"
-
 agent = ModeWca::Agent.new
 agent.start
+
