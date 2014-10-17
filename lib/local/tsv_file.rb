@@ -59,7 +59,7 @@ module ModeWca
       def update_column_types(column_types, row)
         row.each_with_index do |cell, index|
           unless column_types[index] == 'string'
-            if cell =~ /^[0-9]+$/
+            if cell =~ /^[-+]?[0-9]+$/
               type = 'integer'
             else
               type = 'string'
