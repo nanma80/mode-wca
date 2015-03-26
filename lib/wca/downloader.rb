@@ -4,7 +4,7 @@ module ModeWca
       DOMAIN = 'www.worldcubeassociation.org'
       EXPORT_PATH = '/results/misc/'
       EXPORT_PAGE = 'export.html'
-      TSV_URL_PATTERN = /TSV: <a href='(WCA_export492_\d+.tsv.zip)'>/
+      TSV_URL_PATTERN = /TSV: <a href='(WCA_export\d+_\d+.tsv.zip)'>/
 
       def download
         package = ModeWca::Local::Package.new(tsv_url)
@@ -28,12 +28,16 @@ module ModeWca
         ModeWca::Local::LocalFile.clear!
 
         puts "Download starting"
-        Net::HTTP.start(DOMAIN) do |http|
-          resp = http.get(EXPORT_PATH + package.filename)
-          open(package.path, "wb") do |file|
-              file.write(resp.body)
-          end
+        full_path = 'https://' + DOMAIN + EXPORT_PATH + package.filename
+        uri = URI.parse(full_path)
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        request = Net::HTTP::Get.new(uri.request_uri)
+        response = http.request(request)
+        open(package.path, "wb") do |file|
+            file.write(response.body)
         end
+
         puts "Download finished"
       end
 
